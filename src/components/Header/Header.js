@@ -19,6 +19,8 @@ import styles from "assets/jss/material-kit-react/components/headerStyle.js";
 const useStyles = makeStyles(styles);
 
 export default function Header(props) {
+  const brand_app = process.env.REACT_APP_BRAND;
+
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   React.useEffect(() => {
@@ -62,7 +64,7 @@ export default function Header(props) {
   });
   const brandComponent = (
     <Button href="/" className={classes.title}>
-      {brand}
+      {brand !== undefined ? brand : brand_app}
     </Button>
   );
   return (

@@ -1,7 +1,7 @@
 {
-  "name": "material-kit-react",
+  "name": "martial-art-portal",
   "version": "1.10.0",
-  "description": "Material Kit React. Coded by Creative Tim",
+  "description": "Martial Art Portal. Coded by Leonardo Balduino",
   "private": true,
   "main": "src/index.js",
   "dependencies": {

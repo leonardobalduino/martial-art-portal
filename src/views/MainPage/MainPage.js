@@ -29,7 +29,6 @@ export default function MainPage(props) {
     <div>
       <Header
         color="transparent"
-        brand="Ninjutsu Kurokawa Tenchi Budo"
         rightLinks={<HeaderLinks />}
         fixed
         changeColorOnScroll={{
