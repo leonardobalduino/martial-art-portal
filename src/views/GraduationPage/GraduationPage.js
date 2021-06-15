@@ -42,10 +42,14 @@ export default function GraduationPage(props) {
 
         return {
           color: "success",
-          tabButton: graduation.name,
+          tabButton: (
+            <span onClick={() => window.scrollTo({ top: 250 })}>
+              {graduation.name}
+            </span>
+          ),
           tabIcon: GestureIcon,
           tabContent: (
-            <span>
+            <span id={graduation.id}>
               <h3
                 style={styleTitle}
                 className={(classes.center, classes.titleBorderRadius)}
@@ -84,7 +88,10 @@ export default function GraduationPage(props) {
         filter
         image={require("assets/img/profile-bg.jpg").default}
       />
-      <div className={classNames(classes.main, classes.mainRaised)}>
+      <div
+        id="graduations"
+        className={classNames(classes.main, classes.mainRaised)}
+      >
         <div className={classesTeam.section}>
           <h2 className={classesTeam.title}>Graduações</h2>
           <div className={classes.container}>
@@ -98,7 +105,6 @@ export default function GraduationPage(props) {
                       contentGrid: { xs: 12, sm: 10, md: 10 },
                     }}
                     tabs={graduations}
-                    scrollButtons="auto"
                   />
                 </GridItem>
               </GridContainer>
