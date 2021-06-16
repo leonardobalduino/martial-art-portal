@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -17,6 +17,7 @@ import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardFooter from "components/Card/CardFooter.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
+import SnackbarContent from "components/Snackbar/SnackbarContent.js";
 
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
@@ -25,7 +26,24 @@ import image from "assets/img/bg7.jpg";
 const useStyles = makeStyles(styles);
 
 export default function LoginPage(props) {
+  const [showAlert, setShowAlert] = useState(false);
   const api = process.env.REACT_APP_API_URL;
+
+  const renderNotification = () => {
+    if (showAlert) {
+      return (
+        <SnackbarContent
+          message={
+            <span>
+              <b>Erro:</b> Login ou senha inválido
+            </span>
+          }
+          color="danger"
+          icon="info_outline"
+        />
+      );
+    }
+  };
 
   function handleSubmit(event) {
     let login = event.target["login"].value;
@@ -53,16 +71,19 @@ export default function LoginPage(props) {
         }),
       };
 
-      let response = fetch(`${api}/v1/auth/login`, requestOptions)
-        .then((res) => {
+      let response = fetch(`${api}/v1/auth/login`, requestOptions).then(
+        (res) => {
+          setShowAlert(false);
           if (res.ok) {
             const data = res.json();
             return data;
           }
-        })
-        .then(() => alert("Não foi possível efetuar a altenticação"));
+          setShowAlert(true);
+          return res.json();
+        }
+      );
 
-      console.log(response);
+      console.log(response.message);
     } catch (err) {
       console.error(err);
     }
@@ -91,6 +112,7 @@ export default function LoginPage(props) {
         }}
       >
         <div className={classes.container}>
+          {renderNotification()}
           <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={4}>
               <Card className={classes[cardAnimaton]}>
