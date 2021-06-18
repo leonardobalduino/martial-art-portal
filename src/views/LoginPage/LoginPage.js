@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -28,6 +30,7 @@ const useStyles = makeStyles(styles);
 export default function LoginPage(props) {
   const [showAlert, setShowAlert] = useState(false);
   const api = process.env.REACT_APP_API_URL;
+  let history = useHistory();
 
   const renderNotification = () => {
     if (showAlert) {
@@ -38,6 +41,7 @@ export default function LoginPage(props) {
               <b>Erro:</b> Login ou senha inválido
             </span>
           }
+          close
           color="danger"
           icon="info_outline"
         />
@@ -45,6 +49,9 @@ export default function LoginPage(props) {
     }
   };
 
+  const renderRedirect = () => {
+    return history.push("/manager");
+  };
   function handleSubmit(event) {
     let login = event.target["login"].value;
     let password = event.target["password"].value;
@@ -52,7 +59,12 @@ export default function LoginPage(props) {
     event.preventDefault();
   }
 
-  function auth(login, password) {
+  function cleanToken() {
+    localStorage.removeItem("token");
+  }
+
+  async function auth(login, password) {
+    cleanToken;
     if (
       login === undefined ||
       login === "" ||
@@ -71,19 +83,21 @@ export default function LoginPage(props) {
         }),
       };
 
-      let response = fetch(`${api}/v1/auth/login`, requestOptions).then(
-        (res) => {
-          setShowAlert(false);
-          if (res.ok) {
-            const data = res.json();
-            return data;
-          }
-          setShowAlert(true);
-          return res.json();
-        }
-      );
+      setShowAlert(false);
 
-      console.log(response.message);
+      const response = await fetch(`${api}/v1/auth/login`, requestOptions).then(
+        (response) => response
+      );
+      const data = await response.json();
+      console.log(response);
+      if (response.ok) {
+        localStorage.setItem("token", data.access_token);
+        console.log(data.access_token);
+        let ca = false;
+        if (ca) renderRedirect();
+      } else {
+        setShowAlert(true);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -97,6 +111,7 @@ export default function LoginPage(props) {
   const { ...rest } = props;
   return (
     <div>
+      {cleanToken()}
       <Header
         absolute
         color="transparent"
