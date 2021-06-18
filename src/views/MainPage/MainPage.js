@@ -37,7 +37,7 @@ export default function MainPage(props) {
         }}
         {...rest}
       />
-      <Parallax image={require("assets/img/bg4.jpg").default}>
+      <Parallax image={require("assets/img/bg7.jpg").default}>
         <div className={classes.container}>
           <GridContainer>
             <GridItem>
