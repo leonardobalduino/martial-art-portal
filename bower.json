@@ -1,8 +1,8 @@
 {
-  "name": "material-kit-react",
-  "homepage": "https://github.com/creativetimofficial/material-kit-react",
+  "name": "martial-art-portal",
+  "homepage": "https://github.com/leonardobalduino/martial-art-portal",
   "authors": [
-    "creative-tim"
+    "leonardo balduino"
   ],
   "description": "A Badass Material-UI Kit based on Material Design",
   "main": "dist/index.js",
@@ -13,7 +13,7 @@
     "google",
     "twitter"
   ],
-  "license": "Creative TIM License",
+  "license": "Creative TIM Licensesdfad",
   "ignore": [
     "**/.*",
     "node_modules",

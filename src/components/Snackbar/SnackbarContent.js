@@ -21,6 +21,11 @@ export default function SnackbarContent(props) {
   const closeAlert = () => {
     setAlert(null);
   };
+  const timeoutAlert = () => {
+    setTimeout(function () {
+      setAlert(null);
+    }, 6000);
+  };
   if (close !== undefined) {
     action = [
       <IconButton
@@ -52,7 +57,7 @@ export default function SnackbarContent(props) {
         <div>
           {snackIcon}
           {message}
-          {close !== undefined ? action : null}
+          {close !== undefined ? action : timeoutAlert()}
         </div>
       }
       classes={{

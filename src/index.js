@@ -13,6 +13,9 @@ import LoginPage from "views/LoginPage/LoginPage.js";
 import MainPage from "views/MainPage/MainPage.js";
 import GraduationPage from "views/GraduationPage/GraduationPage.js";
 
+// pages for manager
+import ManagerPage from "views/Manager/MainPage/MainPages.js";
+
 var hist = createBrowserHistory();
 
 ReactDOM.render(
@@ -21,9 +24,12 @@ ReactDOM.render(
       <Route path="/landing-page" component={LandingPage} />
       <Route path="/profile-page" component={ProfilePage} />
       <Route path="/login-page" component={LoginPage} />
-      <Route path="/main-page" component={MainPage} />
       <Route path="/graduation-page" component={GraduationPage} />
-      <Route path="/" component={Components} />
+      <Route path="/component" component={Components} />
+
+      <Route path="/manager" component={ManagerPage} />
+
+      <Route path="/" component={MainPage} />
     </Switch>
   </Router>,
   document.getElementById("root")
