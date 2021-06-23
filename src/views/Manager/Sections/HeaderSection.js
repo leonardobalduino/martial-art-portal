@@ -11,7 +11,7 @@ import styles from "assets/jss/material-kit-react/views/componentsSections/navba
 
 const useStyles = makeStyles(styles);
 
-export default function SectionNavbars() {
+export default function HeaderSection() {
   const classes = useStyles();
   return (
     <div className={classes.section}>

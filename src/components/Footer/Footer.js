@@ -60,11 +60,10 @@ export default function Footer(props) {
             </ListItem>
             <ListItem className={classes.inlineBlock}>
               <a
-                href="https://www.creative-tim.com/license?ref=mkr-footer"
-                className={classes.block}
-                target="_blank"
+                href="/login-page"
+                className={classes.block}                
               >
-                Licenses
+                Área Administrativa
               </a>
             </ListItem>
           </List>
