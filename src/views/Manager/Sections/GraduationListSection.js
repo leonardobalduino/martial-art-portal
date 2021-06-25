@@ -6,6 +6,10 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import IconButton from "@material-ui/core/IconButton";
+//material-ui/icons
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 
 export default function GraduationListSection() {
   const [graduations, setGraduations] = useState([]);
@@ -26,6 +30,10 @@ export default function GraduationListSection() {
     }
   }
 
+  function editRoout(id) {
+    return "/manager/graduationForm/" + id;
+  }
+
   return (
     <div>
       <h2>lista de graduação</h2>
@@ -33,7 +41,6 @@ export default function GraduationListSection() {
         <Table size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell>Id</TableCell>
               <TableCell>Nome</TableCell>
               <TableCell>Cor</TableCell>
               <TableCell align="right">Ordem</TableCell>
@@ -44,12 +51,18 @@ export default function GraduationListSection() {
             {graduations.map((row) => (
               <TableRow key={row.id}>
                 <TableCell component="th" scope="row">
-                  {row.id}
+                  {row.name}
                 </TableCell>
-                <TableCell>{row.name}</TableCell>
                 <TableCell>{row.color}</TableCell>
                 <TableCell align="right">{row.order}</TableCell>
-                <TableCell align="center">editar</TableCell>
+                <TableCell align="center">
+                  <IconButton href={editRoout(row.id)} aria-label="edit">
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton aria-label="delete">
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
