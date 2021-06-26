@@ -7,6 +7,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "components/CustomButtons/Button.js";
 //material-ui/icons
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -37,6 +38,19 @@ export default function GraduationListSection() {
   return (
     <div>
       <h2>lista de graduação</h2>
+      <div>
+        <Button
+          href="/manager/graduationForm"
+          color="success"
+          size="sm"
+          startIcon={<EditIcon />}
+        >
+          Novo
+        </Button>
+        <br />
+        <br />
+      </div>
+
       <TableContainer component={Paper}>
         <Table size="small" aria-label="a dense table">
           <TableHead>

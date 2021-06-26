@@ -92,7 +92,6 @@ export default function LoginPage(props) {
       console.log(response);
       if (response.ok) {
         localStorage.setItem("token", data.access_token);
-        console.log(data.access_token);
 
         renderRedirect();
       } else {
