@@ -15,6 +15,9 @@ import GraduationPage from "views/GraduationPage/GraduationPage.js";
 
 // pages for manager
 import ManagerPage from "views/Manager/MainPage/MainPages.js";
+import PersonListSection from "views/Manager/Sections/PersonListSection.js";
+import GraduationListSection from "views/Manager/Sections/GraduationListSection.js";
+import GraduationFormSection from "views/Manager/Sections/GraduationFormSection.js";
 
 var hist = createBrowserHistory();
 
@@ -27,8 +30,35 @@ ReactDOM.render(
       <Route path="/graduation-page" component={GraduationPage} />
       <Route path="/component" component={Components} />
 
-      <Route path="/manager" component={ManagerPage} />
+      <Route
+        path="/manager/personList"
+        render={(props) => (
+          <ManagerPage {...props} content={<PersonListSection />} />
+        )}
+      />
 
+      <Route
+        path="/manager/graduationList"
+        render={(props) => (
+          <ManagerPage {...props} content={<GraduationListSection />} />
+        )}
+      />
+
+      <Route
+        path="/manager/graduationForm/:id"
+        render={(props) => (
+          <ManagerPage {...props} content={<GraduationFormSection />} />
+        )}
+      />
+
+      <Route
+        path="/manager/graduationForm"
+        render={(props) => (
+          <ManagerPage {...props} content={<GraduationFormSection />} />
+        )}
+      />
+
+      <Route path="/manager" component={ManagerPage} />
       <Route path="/" component={MainPage} />
     </Switch>
   </Router>,
