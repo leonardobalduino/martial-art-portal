@@ -8,11 +8,24 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "components/CustomButtons/Button.js";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import SnackbarContent from "components/Snackbar/SnackbarContent.js";
+
 //material-ui/icons
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 
 export default function GraduationListSection() {
+  const [open, setOpen] = React.useState(false);
+  const [msgAlert, setMsgAlert] = React.useState("");
+  const [idDelete, setIdDelete] = React.useState();
+  const [showAlert, setShowAlert] = useState(false);
+
   const [graduations, setGraduations] = useState([]);
   useEffect(() => {
     getGraduations();
@@ -30,6 +43,96 @@ export default function GraduationListSection() {
       console.error(err);
     }
   }
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  function deleteAlert(graduation) {
+    setShowAlert(false);
+    setMsgAlert("Deseja realmente excluir '" + graduation.name + "'?");
+    setIdDelete(graduation.id);
+    handleClickOpen();
+  }
+
+  async function deleteRegister() {
+    try {
+      const requestOptions = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      };
+
+      const res = await fetch(
+        `${api}/v1/graduations/${idDelete}`,
+        requestOptions
+      );
+
+      if (!res.ok) {
+        setShowAlert(true);
+        return;
+      }
+      getGraduations();
+    } catch (err) {
+      setShowAlert(true);
+      console.error(err);
+    }
+  }
+
+  const renderNotification = () => {
+    if (showAlert) {
+      return (
+        <SnackbarContent
+          message={
+            <span>
+              <b>Erro:</b> Login ou senha inválido
+            </span>
+          }
+          close
+          color="danger"
+          icon="info_outline"
+        />
+      );
+    }
+  };
+
+  const renderDialog = () => {
+    return (
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Excluir"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {msgAlert}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              handleClose();
+              deleteRegister();
+            }}
+            color="danger"
+          >
+            Excluir
+          </Button>
+          <Button onClick={handleClose} color="facebook" autoFocus>
+            Cancelar
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  };
 
   function editRoout(id) {
     return "/manager/graduationForm/" + id;
@@ -67,13 +170,24 @@ export default function GraduationListSection() {
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
-                <TableCell>{row.color}</TableCell>
+                <TableCell>
+                  <TextField
+                    type="color"
+                    value={row.color}
+                    disabled
+                    size="small"
+                    style={{ width: "10ch" }}
+                  />
+                </TableCell>
                 <TableCell align="right">{row.order}</TableCell>
                 <TableCell align="center">
                   <IconButton href={editRoout(row.id)} aria-label="edit">
                     <EditIcon />
                   </IconButton>
-                  <IconButton aria-label="delete">
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => deleteAlert(row)}
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
@@ -82,6 +196,8 @@ export default function GraduationListSection() {
           </TableBody>
         </Table>
       </TableContainer>
+      {renderDialog()}
+      {renderNotification()}
     </div>
   );
 }

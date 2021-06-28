@@ -36,7 +36,6 @@ export default function ConciulSection() {
       const data = await res.json();
 
       setCouncilMembers(data);
-      console.log(councilMembers);
     } catch (err) {
       console.error(err);
     }

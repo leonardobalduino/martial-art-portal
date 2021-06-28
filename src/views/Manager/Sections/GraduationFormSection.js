@@ -8,6 +8,9 @@ import Button from "components/CustomButtons/Button.js";
 import SaveIcon from "@material-ui/icons/Save";
 import CancelIcon from "@material-ui/icons/Cancel";
 
+// core components
+import SnackbarContent from "components/Snackbar/SnackbarContent.js";
+
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
 const useStyles = makeStyles(styles);
@@ -41,6 +44,8 @@ export default function GraduationFormSection() {
   let { id } = useParams();
   let history = useHistory();
 
+  const [showAlert, setShowAlert] = useState(false);
+  const [msgAlert, setMsgAlert] = useState();
   const [value, setValue] = useState({
     name: "",
     description: "",
@@ -48,16 +53,36 @@ export default function GraduationFormSection() {
     color: "#ffffff",
   });
 
+  const renderRedirect = () => {
+    return history.push("/manager/graduationList");
+  };
+
+  const renderNotification = () => {
+    if (showAlert) {
+      return (
+        <SnackbarContent
+          message={
+            <span>
+              <b>Erro:</b> {msgAlert}
+            </span>
+          }
+          color="danger"
+          icon="info_outline"
+        />
+      );
+    }
+  };
+
   function handleChange(event) {
-    console.log(localStorage.getItem("token"));
     let newValue = Object.assign({}, value);
     newValue[event.target.id] = event.target.value;
     setValue(newValue);
   }
 
   function handleSubmit(event) {
-    console.log(id);
-    salve();
+    setShowAlert(false);
+    if (id === undefined) salve();
+    else upDate();
     event.preventDefault();
   }
 
@@ -85,30 +110,59 @@ export default function GraduationFormSection() {
         order: data.order,
         color: data.color,
       });
-      console.log(value);
     } catch (err) {
       console.error(err);
     }
+  }
+
+  function getHeaders() {
+    let headers = {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    };
+    return headers;
   }
 
   async function salve() {
     try {
       const requestOptions = {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+        headers: getHeaders(),
         body: JSON.stringify(value),
       };
 
       const res = await fetch(`${api}/v1/graduations/`, requestOptions);
 
       if (!res.ok) {
-        history.push("/manager/graduationList");
+        const data = await res.json();
+        setMsgAlert(data.msg !== undefined ? data.msg : data.message);
+        setShowAlert(true);
         return;
       }
+      renderRedirect();
     } catch (err) {
+      setShowAlert(true);
+      console.error(err);
+    }
+  }
+
+  async function upDate() {
+    try {
+      const requestOptions = {
+        method: "PATCH",
+        headers: getHeaders(),
+        body: JSON.stringify(value),
+      };
+
+      const res = await fetch(`${api}/v1/graduations/${id}`, requestOptions);
+
+      if (!res.ok) {
+        setShowAlert(true);
+        return;
+      }
+      renderRedirect();
+    } catch (err) {
+      setShowAlert(true);
       console.error(err);
     }
   }
@@ -177,6 +231,7 @@ export default function GraduationFormSection() {
           </div>
         </form>
       </div>
+      {renderNotification()}
     </div>
   );
 }

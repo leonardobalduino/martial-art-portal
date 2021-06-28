@@ -61,6 +61,7 @@ export default function LoginPage(props) {
 
   function cleanToken() {
     localStorage.removeItem("token");
+    localStorage.removeItem("lastDate");
   }
 
   async function auth(login, password) {
@@ -89,7 +90,7 @@ export default function LoginPage(props) {
         (response) => response
       );
       const data = await response.json();
-      console.log(response);
+
       if (response.ok) {
         localStorage.setItem("token", data.access_token);
 
