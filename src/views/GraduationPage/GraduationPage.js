@@ -14,6 +14,8 @@ import NavPills from "components/NavPills/NavPills.js";
 
 import styles from "assets/jss/material-kit-react/views/components.js";
 import stylesTeam from "assets/jss/material-kit-react/views/landingPageSections/teamStyle.js";
+// sections for this page
+import GraduationSection from "./Sections/GraduationSection.js";
 
 // @material-ui/icons
 import GestureIcon from "@material-ui/icons/Gesture";
@@ -23,6 +25,7 @@ const useStylesTeam = makeStyles(stylesTeam);
 
 export default function GraduationPage(props) {
   const [graduations, setGraduations] = useState([]);
+  const [graduations2, setGraduations2] = useState([]);
   useEffect(() => {
     getGraduations();
   }, []);
@@ -33,6 +36,7 @@ export default function GraduationPage(props) {
     try {
       const res = await fetch(`${api}/v1/graduations`);
       const data = await res.json();
+      setGraduations2(data);
 
       var tabs = data.map(function (graduation) {
         const styleTitle = {
@@ -42,11 +46,7 @@ export default function GraduationPage(props) {
 
         return {
           color: "success",
-          tabButton: (
-            <span onClick={() => window.scrollTo({ top: 250 })}>
-              {graduation.name}
-            </span>
-          ),
+          tabButton: `${graduation.name}`,
           tabIcon: GestureIcon,
           tabContent: (
             <span id={graduation.id}>
@@ -95,7 +95,8 @@ export default function GraduationPage(props) {
         <div className={classesTeam.section}>
           <h2 className={classesTeam.title}>Graduações</h2>
           <div className={classes.container}>
-            <div id="navigation-pills">
+            <GraduationSection graduations={graduations2} />
+            <div id="navigation-pills" style={{ display: "none" }}>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12} lg={12}>
                   <NavPills
