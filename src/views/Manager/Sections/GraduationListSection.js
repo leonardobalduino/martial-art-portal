@@ -8,7 +8,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "components/CustomButtons/Button.js";
-import TextField from "@material-ui/core/TextField";
+import Box from "@material-ui/core/Box";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -75,6 +75,8 @@ export default function GraduationListSection() {
       );
 
       if (!res.ok) {
+        const data = await res.json();
+        setMsgAlert(data.msg !== undefined ? data.msg : data.message);
         setShowAlert(true);
         return;
       }
@@ -91,10 +93,9 @@ export default function GraduationListSection() {
         <SnackbarContent
           message={
             <span>
-              <b>Erro:</b> Login ou senha inválido
+              <b>Erro:</b> {msgAlert}
             </span>
           }
-          close
           color="danger"
           icon="info_outline"
         />
@@ -141,6 +142,7 @@ export default function GraduationListSection() {
   return (
     <div>
       <h2>lista de graduação</h2>
+      {renderNotification()}
       <div>
         <Button
           href="/manager/graduationForm"
@@ -171,13 +173,17 @@ export default function GraduationListSection() {
                   {row.name}
                 </TableCell>
                 <TableCell>
-                  <TextField
-                    type="color"
-                    value={row.color}
-                    disabled
-                    size="small"
-                    style={{ width: "10ch" }}
-                  />
+                  <Box
+                    component="span"
+                    style={{
+                      p: 2,
+                      border: "1px dashed grey",
+                      backgroundColor: row.color,
+                      cursor: "context-menu",
+                    }}
+                  >
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </Box>
                 </TableCell>
                 <TableCell align="right">{row.order}</TableCell>
                 <TableCell align="center">

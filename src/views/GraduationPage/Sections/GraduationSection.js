@@ -39,6 +39,7 @@ export default function GraduationSection(props) {
                   p: 2,
                   border: "1px dashed grey",
                   backgroundColor: g.color,
+                  cursor: "context-menu",
                 }}
               >
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

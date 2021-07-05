@@ -16,6 +16,7 @@ import GraduationPage from "views/GraduationPage/GraduationPage.js";
 // pages for manager
 import ManagerPage from "views/Manager/MainPage/MainPages.js";
 import PersonListSection from "views/Manager/Sections/PersonListSection.js";
+import PersonFormSection from "views/Manager/Sections/PersonFormSection.js";
 import GraduationListSection from "views/Manager/Sections/GraduationListSection.js";
 import GraduationFormSection from "views/Manager/Sections/GraduationFormSection.js";
 
@@ -34,6 +35,20 @@ ReactDOM.render(
         path="/manager/personList"
         render={(props) => (
           <ManagerPage {...props} content={<PersonListSection />} />
+        )}
+      />
+
+      <Route
+        path="/manager/personForm/:id"
+        render={(props) => (
+          <ManagerPage {...props} content={<PersonFormSection />} />
+        )}
+      />
+
+      <Route
+        path="/manager/personForm"
+        render={(props) => (
+          <ManagerPage {...props} content={<PersonFormSection />} />
         )}
       />
 
