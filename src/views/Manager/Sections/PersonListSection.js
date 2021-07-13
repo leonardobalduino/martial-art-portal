@@ -161,6 +161,7 @@ export default function PersonListSection() {
           <TableHead>
             <TableRow>
               <TableCell>Nome</TableCell>
+              <TableCell>Conselho</TableCell>
               <TableCell>Ativo</TableCell>
               <TableCell>Graduação</TableCell>
               <TableCell align="center">Ação</TableCell>
@@ -171,6 +172,13 @@ export default function PersonListSection() {
               <TableRow key={row.id}>
                 <TableCell component="th" scope="row">
                   {row.name}
+                </TableCell>
+                <TableCell>
+                  {row.council_member == true ? (
+                    <CheckBoxIcon />
+                  ) : (
+                    <CheckBoxOutlineBlankIcon />
+                  )}
                 </TableCell>
                 <TableCell>
                   {row.active == true ? (

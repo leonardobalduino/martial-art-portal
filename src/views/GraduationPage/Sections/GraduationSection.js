@@ -8,6 +8,7 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Box from "@material-ui/core/Box";
+import PersonSection from "../Sections/PersonSection.js";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,7 +50,12 @@ export default function GraduationSection(props) {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>{g.description}</Typography>
+            <Typography>
+              {g.description}
+              <br />
+              <br />
+              <PersonSection graduation={g} />
+            </Typography>
           </AccordionDetails>
         </Accordion>
       ))}

@@ -56,17 +56,7 @@ export default function HeaderLinks(props) {
             </a>,
           ]}
         />
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <Button
-          href="https://www.creative-tim.com/product/material-kit-react?ref=mkr-navbar"
-          color="transparent"
-          target="_blank"
-          className={classes.navLink}
-        >
-          <CloudDownload className={classes.icons} /> Download
-        </Button>
-      </ListItem>
+      </ListItem>      
       <ListItem className={classes.listItem}>
         <Tooltip
           id="instagram-tooltip"

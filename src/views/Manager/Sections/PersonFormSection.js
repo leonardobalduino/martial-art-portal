@@ -42,13 +42,9 @@ export default function PersonFormSection() {
       number: "",
       city: "",
     },
-    graduation_current: {
-      name: "",
-      graduation_id: "",
-      description: "",
-      color: "",
-    },
-    active: false,
+    graduation_current_id: "",
+    active: true,
+    council_member: false,
   });
 
   const renderRedirect = () => {
@@ -75,15 +71,15 @@ export default function PersonFormSection() {
     let newValue = Object.assign({}, value);
     if (event.target.type === "checkbox")
       newValue[event.target.id] = event.target.checked;
+    else if (
+      event.target.name !== "" &&
+      event.target.name !== undefined &&
+      (event.target.id === undefined || event.target.id === "")
+    )
+      newValue[event.target.name] = event.target.value;
     else if (event.target.name !== "" && event.target.name !== undefined)
       newValue[event.target.id][event.target.name] = event.target.value;
     else newValue[event.target.id] = event.target.value;
-    setValue(newValue);
-  }
-
-  function handleChangeGraduation(event) {
-    let newValue = Object.assign({}, value);
-    newValue["graduation_current"]["graduation_id"] = event.target.value;
     setValue(newValue);
   }
 
@@ -118,7 +114,8 @@ export default function PersonFormSection() {
         email: data.email,
         address: data.address,
         active: data.active,
-        graduation_current: data.graduation_current,
+        graduation_current_id: data.graduation_current.graduation_id,
+        council_member: data.council_member,
       });
     } catch (err) {
       console.error(err);
@@ -144,19 +141,12 @@ export default function PersonFormSection() {
     return headers;
   }
 
-  function newObjectValue() {
-    let newValue = Object.assign({}, value);
-    delete newValue["graduation_current"];
-    newValue["graduation_current_id"] = value.graduation_current.graduation_id;
-    return newValue;
-  }
-
   async function salve() {
     try {
       const requestOptions = {
         method: "POST",
         headers: getHeaders(),
-        body: JSON.stringify(newObjectValue()),
+        body: JSON.stringify(value),
       };
 
       const res = await fetch(`${api}/v1/persons/`, requestOptions);
@@ -179,7 +169,7 @@ export default function PersonFormSection() {
       const requestOptions = {
         method: "PATCH",
         headers: getHeaders(),
-        body: JSON.stringify(newObjectValue()),
+        body: JSON.stringify(value),
       };
 
       const res = await fetch(`${api}/v1/persons/${id}`, requestOptions);
@@ -232,10 +222,10 @@ export default function PersonFormSection() {
             <Select
               className={classesForm.inputMedium}
               labelId="graduation-id-label"
-              id="graduation_current"
-              name="graduation_id"
-              value={value.graduation_current.graduation_id}
-              onChange={handleChangeGraduation}
+              id="graduation_current_id"
+              name="graduation_current_id"
+              value={value.graduation_current_id}
+              onChange={handleChange}
             >
               <MenuItem value={""}></MenuItem>
               {graduations.map((g) => (
@@ -266,6 +256,16 @@ export default function PersonFormSection() {
               />
             }
             label="Ativo"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="council_member"
+                checked={value.council_member}
+                onChange={handleChange}
+              />
+            }
+            label="Membro do conselho"
           />
           <div className={classesForm.center}>
             <Button
