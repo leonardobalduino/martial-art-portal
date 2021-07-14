@@ -11,12 +11,14 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import Box from "@material-ui/core/Box";
+
 // @material-ui/icons
 import SaveIcon from "@material-ui/icons/Save";
 import CancelIcon from "@material-ui/icons/Cancel";
 
 // core components
 import SnackbarContent from "components/Snackbar/SnackbarContent.js";
+import UploadImages from "components/Upload/upload-images.component.js";
 
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 import formStyles from "assets/jss/material-kit-react/components/formStyle.js";
@@ -193,6 +195,11 @@ export default function PersonFormSection() {
           className={(classes.form, classesForm.root)}
           onSubmit={handleSubmit}
         >
+          {id !== undefined && (
+            <div className="container">
+              <UploadImages id={id} />
+            </div>
+          )}
           <TextField
             id="name"
             label="Nome"
