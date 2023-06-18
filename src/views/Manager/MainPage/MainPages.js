@@ -26,7 +26,6 @@ export default function MainPage(props) {
   }, []);
 
   async function rewewToken() {
-    console.log(new Date());
     let lastDate = localStorage.getItem("lastDate");
 
     if (lastDate === null || lastDate === undefined) {
@@ -49,7 +48,6 @@ export default function MainPage(props) {
         const res = await fetch(`${api}/v1/auth/renew`, requestOptions);
         const data = await res.json();
 
-        console.log(res);
         if (!res.ok) {
           history.push("/login-page");
           return;

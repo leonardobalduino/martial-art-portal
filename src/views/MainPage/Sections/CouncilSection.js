@@ -9,10 +9,10 @@ import { makeStyles } from "@material-ui/core/styles";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import Button from "components/CustomButtons/Button.js";
+//import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
+//import CardBody from "components/Card/CardBody.js";
+//import CardFooter from "components/Card/CardFooter.js";
 
 import styles from "assets/jss/material-kit-react/views/landingPageSections/teamStyle.js";
 
@@ -69,9 +69,11 @@ export default function ConciulSection() {
                 <h4 className={classes.cardTitle}>
                   {council.name}
                   <br />
-                  <small className={classes.smallTitle}>Graduação</small>
+                  <small className={classes.smallTitle}>
+                    {council.graduation_current.name}
+                  </small>
                 </h4>
-                <CardBody>
+                {/* <CardBody>
                   <p className={classes.description}>{council.biography}</p>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>
@@ -96,7 +98,7 @@ export default function ConciulSection() {
                   >
                     <i className={classes.socials + " fab fa-facebook"} />
                   </Button>
-                </CardFooter>
+                </CardFooter>*/}
               </Card>
             </GridItem>
           ))}
