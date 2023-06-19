@@ -17,6 +17,7 @@ import SnackbarContent from "components/Snackbar/SnackbarContent.js";
 import Box from "@material-ui/core/Box";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
+import TextField from "@material-ui/core/TextField";
 
 // @material-ui/icons
 import SearchIcon from "@material-ui/icons/Search";
@@ -48,6 +49,7 @@ export default function PersonListSection() {
   const [graduationId, setGraduationId] = useState("");
   const [active, setActive] = useState("");
   const [councilMember, setCouncilMember] = useState("");
+  const [name, setName] = useState("");
 
   const [persons, setPersons] = useState([]);
   const [graduations, setGraduations] = useState([]);
@@ -61,6 +63,7 @@ export default function PersonListSection() {
   async function getPersons() {
     try {
       let params = "";
+      if (name != "") params += "&name=" + name;
       if (graduationId != "") params += "&graduation_id=" + graduationId;
       if (councilMember != "") params += "&council_member=" + councilMember;
       if (active != "") params += "&active=" + active;
@@ -183,6 +186,12 @@ export default function PersonListSection() {
         <h5>Filtro</h5>
         <div>
           <form className={(classes.form, classesForm.root)}>
+            <TextField
+              id="name"
+              label="Nome"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
             <FormControl className={classes.formControl}>
               <InputLabel id="graduation-id-label">Graduação</InputLabel>
               <Select
