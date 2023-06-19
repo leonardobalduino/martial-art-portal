@@ -141,7 +141,7 @@ export default function GraduationListSection() {
 
   return (
     <div>
-      <h2>lista de graduação</h2>
+      <h2>lista de graduação ({graduations.length})</h2>
       {renderNotification()}
       <div>
         <Button
