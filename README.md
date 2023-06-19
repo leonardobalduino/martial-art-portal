@@ -16,6 +16,9 @@ git clone https://github.com/leonardobalduino/martial-art-portal.git
 #### 1º Install Node
 follow this steps -> https://nodejs.dev/en/download/
 
+#### 1º Install dependecies
+`npm install`
+
 #### 2º Run in terminal
 `npm start`
 
